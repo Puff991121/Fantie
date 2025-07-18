@@ -62,6 +62,16 @@
         bindinput="onEmailChange"
       />
     </view>
+    <view class="form-item">
+      <text class="label">目标体重</text>
+      <input 
+        class="input" 
+        type="number" 
+        placeholder="请输入你的目标体重（kg）" 
+        value="{{userInfo.targetWeight}}" 
+        bindinput="onTargetWeightChange"
+      />
+    </view>
   </view>
 
   <!-- 退出登录按钮 -->

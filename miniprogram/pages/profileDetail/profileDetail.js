@@ -18,7 +18,6 @@ Page({
   // 获取用户信息
   fetchUserInfo() {
     wx.showLoading({ title: '加载中...' })
-    
     // 从本地缓存获取
     const localUserInfo = wx.getStorageSync('userInfo')
     if (localUserInfo) {
@@ -27,7 +26,6 @@ Page({
         genderIndex: this.getGenderIndex(localUserInfo.gender)
       })
     }
-    
     // 从云数据库获取最新数据
     wx.cloud.callFunction({
       name: 'userInfo',
@@ -121,16 +119,19 @@ Page({
       'userInfo.email': e.detail.value
     })
   },
-
+  onTargetWeightChange(e) {
+    this.setData({
+      'userInfo.targetWeight': e.detail.value
+    })
+  },
   // 保存用户信息
   saveUserInfo() {
-    wx.showLoading({ title: '保存中...' })
-    
+    wx.showLoading({ title: '保存中...' });
     wx.cloud.callFunction({
       name: 'userInfo',
       data: {
         type:'updateUserInfo',
-        userInfo: this.data.userInfo
+        userInfo: this.data.userInfo,
       },
      
     }).then(res =>{
@@ -139,10 +140,12 @@ Page({
           wx.showToast({
             title: '保存成功',
             icon: 'success'
-          })
+          });
           wx.setStorageSync('userInfo', this.data.userInfo)
           setTimeout(() => {
-            wx.navigateBack()
+            wx.switchTab({
+              url: '/pages/profile/profile',
+            });
           }, 1500)
         } else {
           wx.showToast({

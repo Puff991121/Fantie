@@ -17,6 +17,8 @@ const updateUserInfo = async (event) => {
       gender: event.userInfo.gender,
       phone: event.userInfo.phone || '',
       email: event.userInfo.email || '',
+      weight:event.userInfo.weight || '',
+      targetWeight:event.userInfo.targetWeight || '',
       updatedAt: db.serverDate()
     }
 

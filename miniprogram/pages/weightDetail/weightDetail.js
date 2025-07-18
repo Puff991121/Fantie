@@ -123,6 +123,37 @@ Page({
     })
   },
 
+  //保存用户当前体重
+  saveUserInfo(weight) {
+    const userInfo = wx.getStorageSync('userInfo');
+    wx.cloud.callFunction({
+      name: 'userInfo',
+      data: {
+        type:'updateUserInfo',
+        userInfo: {
+          ...userInfo,
+          weight,
+        },
+      },
+     
+    }).then(res =>{
+        if (res.result.code === 200) {
+          wx.setStorageSync('userInfo', res.result.data)
+        } else {
+          wx.showToast({
+            title: res.result.message || '保存失败',
+            icon: 'none'
+          })
+        }
+    }).catch(err =>{
+      wx.hideLoading()
+      wx.showToast({
+        title: '保存失败',
+        icon: 'none'
+      })
+    })
+  },
+
   // 添加/更新体重记录
   addWeightRecord() {
     const { selectedTime, inputWeight, currentDate } = this.data
@@ -148,10 +179,10 @@ Page({
             title: '记录成功',
             icon: 'success'
           });
-          this.setData({
-            showModal:false,
-          })
-          // this.hideAddModal();
+          //更新最新体重数据
+          this.saveUserInfo(inputWeight);
+          this.hideAddModal();
+          
           // 刷新数据
           this.getTodayData()
           this.getHistoryData()

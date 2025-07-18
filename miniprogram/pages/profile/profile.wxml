@@ -1,6 +1,6 @@
 <view class="profile-container">
   <!-- 顶部用户信息区 -->
-  <view class="user-info">
+  <view class="user-info" bind:tap="editUserInfo">
     <view class="left-section">
       <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
       <view class="user-detail">
@@ -8,7 +8,7 @@
         <text class="join-days">已加入{{joinDays}}天</text>
       </view>
     </view>
-    <view class="edit-btn" bind:tap="editUserInfo">编辑资料</view>
+    <view class="edit-btn" >编辑资料</view>
   </view>
 
   <!-- 数据统计卡片 -->
@@ -19,8 +19,8 @@
       <text class="stat-desc">运动打卡</text>
     </view>
     <view class="stat-item" bind:tap="goToWeightDetail">
-      <text class="stat-value">{{stats.currentWeight}}kg</text>
-      <text class="stat-label">目标：{{stats.targetWeight}}kg</text>
+      <text class="stat-value">{{userInfo.weight}}kg</text>
+      <text class="stat-label">目标：{{userInfo.targetWeight}}kg</text>
       <text class="stat-desc">当前体重</text>
     </view>
     <view class="stat-item">
