@@ -1,0 +1,61 @@
+<view class="profile-container">
+  <!-- 顶部用户信息区 -->
+  <view class="user-info">
+    <view class="left-section">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
+      <view class="user-detail">
+        <text class="nickname">{{userInfo.nickName || '未登录用户'}}</text>
+        <text class="join-days">已加入{{joinDays}}天</text>
+      </view>
+    </view>
+    <view class="edit-btn" bind:tap="editUserInfo">编辑资料</view>
+  </view>
+
+  <!-- 数据统计卡片 -->
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-value">{{stats.exerciseCount}}</text>
+      <text class="stat-label">累计次数</text>
+      <text class="stat-desc">运动打卡</text>
+    </view>
+    <view class="stat-item" bind:tap="goToWeightDetail">
+      <text class="stat-value">{{stats.currentWeight}}kg</text>
+      <text class="stat-label">目标：{{stats.targetWeight}}kg</text>
+      <text class="stat-desc">当前体重</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.burnHours}}h</text>
+      <text class="stat-label">本月累计</text>
+      <text class="stat-desc">燃脂运动</text>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/health-data/health-data">
+      <image class="menu-icon" src="/images/health-data.png"></image>
+      <text>我的健康数据</text>
+      <image class="arrow" src="/images/arrow-right.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/exercise-record/exercise-record">
+      <image class="menu-icon" src="/images/exercise-record.png"></image>
+      <text>我的运动记录</text>
+      <image class="arrow" src="/images/arrow-right.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/diet-log/diet-log">
+      <image class="menu-icon" src="/images/diet-log.png"></image>
+      <text>我的饮食日志</text>
+      <image class="arrow" src="/images/arrow-right.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/goal-setting/goal-setting">
+      <image class="menu-icon" src="/images/goal-setting.png"></image>
+      <text>我的目标设定</text>
+      <image class="arrow" src="/images/arrow-right.png"></image>
+    </view>
+    <view class="menu-item" bindtap="navigateTo" data-url="/pages/settings/settings">
+      <image class="menu-icon" src="/images/settings.png"></image>
+      <text>设置</text>
+      <image class="arrow" src="/images/arrow-right.png"></image>
+    </view>
+  </view>
+</view>

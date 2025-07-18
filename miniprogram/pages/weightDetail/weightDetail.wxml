@@ -1,0 +1,91 @@
+<!-- pages/weight/weight.wxml -->
+<view class="weight-container">
+  <!-- 日期选择区域 -->
+  <view class="date-header">
+    <view class="arrow" bindtap="prevDay"><image src="/images/left-arrow.png" mode=""/></view>
+    <picker mode="date" value="{{currentDate}}" fields="day" bindchange="handleDateChange">
+      <view class="current-date">{{currentDate}}</view>
+    </picker>
+    <view class="arrow" bindtap="nextDay"><image src="/images/right-arrow.png" mode=""/></view>
+  </view>
+
+  <!-- 当日体重记录 -->
+  <view class="today-weight">
+    <view class="weight-row">
+      <text>早上</text>
+      <text>晚上</text>
+      <text>相差</text>
+    </view>
+    <view class="weight-row">
+      <text>{{todayData.morning || '--'}}kg</text>
+      <text>{{todayData.evening || '--'}}kg</text>
+      <view class="{{todayData.difference > 0 ? 'increase' : 'decrease'}}">
+        {{todayData.difference ? (todayData.difference > 0 ? '+' + todayData.difference : todayData.difference) + 'kg' : '--'}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 历史记录表格 -->
+  <view class="history-section">
+    <view class="section-title">最近7天体重记录</view>
+    <view class="history-table">
+      <view class="table-header">
+        <text>日期</text>
+        <text>早上</text>
+        <text>晚上</text>
+        <text>相差</text>
+        <text>BMI</text>
+      </view>
+      <block wx:for="{{historyData}}" wx:key="date">
+        <view class="table-row">
+          <text>{{item.date}}</text>
+          <text>{{item.morning}}kg</text>
+          <text>{{item.evening}}kg</text>
+          <view class="{{item.difference > 0 ? 'increase' : 'decrease'}}">
+            {{item.difference > 0 ? '+' + item.difference : item.difference}}
+          </view>
+          <text>{{item.bmi}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 本月统计 -->
+  <view class="month-stats">
+    <view class="section-title">本月统计</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text>平均体重</text>
+        <text class="stat-value">{{monthStats.average}}kg</text>
+      </view>
+      <view class="stat-item">
+        <text>体重波动</text>
+        <text class="stat-value">{{monthStats.fluctuation}}kg</text>
+      </view>
+      <view class="stat-item">
+        <text>最高体重</text>
+        <text class="stat-value">{{monthStats.max}}kg</text>
+      </view>
+      <view class="stat-item">
+        <text>最低体重</text>
+        <text class="stat-value">{{monthStats.min}}kg</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加记录按钮 -->
+  <button class="add-button" bindtap="showAddModal">+添加今日记录</button>
+
+  <!-- 添加记录模态框 -->
+  <modal title="添加体重记录" wx:if="{{showModal}}" bindcancel="hideAddModal" bindconfirm="addWeightRecord">
+    <view class="modal-content">
+      <picker mode="selector" range="{{['早上', '晚上']}}" bindchange="handleTimeChange">
+        <view class="picker">选择时间: {{selectedTime}}</view>
+      </picker>
+      <input type="number" placeholder="请输入体重(kg)" bindinput="handleWeightInput" />
+    </view>
+  </modal>
+
+
+
+</view>

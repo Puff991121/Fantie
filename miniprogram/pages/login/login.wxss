@@ -1,0 +1,82 @@
+/* pages/login/login.wxss */
+page{
+  background: linear-gradient(#d7f7d7,#FFFFFF) !important;
+  height: 100vh;
+  width: 100vw;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+.welcome-section {
+  margin-top: 80rpx;
+  text-align: center;
+}
+
+.welcome-text {
+  font-size: 42rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.subtitle {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.image-section {
+  margin: 80rpx 0;
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.app-logo {
+  width: 100%;
+  height: 100%;
+}
+
+.button-section {
+  width: 100%;
+  margin-top: 160rpx;
+}
+
+.login-btn {
+  width: 100% !important;
+  line-height: 60rpx;
+  border-radius: 10rpx;
+  background-color: #07C160;
+  color: white;
+  font-size: 32rpx;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.wx-icon{
+  width: 20px;
+  height: 16px;
+}
+.login-btn::after {
+  border: none;
+}
+
+.agreement-section {
+  position: fixed;
+  bottom: 60rpx;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.agreement-link {
+  color: #576B95;
+}

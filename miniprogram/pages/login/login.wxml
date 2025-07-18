@@ -1,0 +1,33 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+  <view class="image-section">
+    <image src="/images/logo.png" mode="aspectFit" class="app-logo"></image>
+  </view>
+  <!-- 顶部欢迎语 -->
+  <view class="welcome-section">
+    <text class="welcome-text">欢迎使用生活记</text>
+    <text class="subtitle">记录每一天的美好时光</text>
+  </view>
+  
+  <!-- 中间图片或图标 -->
+
+  
+  <!-- 登录按钮 -->
+  <view class="button-section">
+    <button 
+      class="login-btn" 
+      open-type="getUserInfo" 
+      bindgetuserinfo="handleGetUserInfo"
+    >
+      <image src="/images/wx.png" mode="" class='wx-icon' /> 微信一键登录
+    </button>
+  </view>
+  
+  <!-- 底部协议 -->
+  <view class="agreement-section">
+    <text class="agreement-text">登录即表示同意</text>
+    <text class="agreement-link" bindtap="navigateToUserAgreement">《用户协议》</text>
+    <text class="agreement-text">和</text>
+    <text class="agreement-link" bindtap="navigateToPrivacyPolicy">《隐私政策》</text>
+  </view>
+</view>

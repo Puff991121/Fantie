@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/profile/profile",
+    "pages/home/home",
+    "pages/discover/discover",
+    "pages/data/data",
+    "pages/profileDetail/profileDetail",
+    "pages/weightDetail/weightDetail"
+  ],
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#09BB07",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "记录",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_selete.png"
+      },
+      {
+        "pagePath": "pages/discover/discover",
+        "text": "发现",
+        "iconPath": "images/discover.png",
+        "selectedIconPath": "images/discover_selete.png"
+      },
+      {
+        "pagePath": "pages/data/data",
+        "text": "数据",
+        "iconPath": "images/data.png",
+        "selectedIconPath": "images/data_selete.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_selete.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "生活记",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "permission": {
+    "scope.userInfo": {
+      "desc": "获取你的用户信息"
+    }
+  },
+  "cloud": true
+}
