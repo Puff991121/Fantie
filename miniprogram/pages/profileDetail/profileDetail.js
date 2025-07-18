@@ -119,6 +119,11 @@ Page({
       'userInfo.email': e.detail.value
     })
   },
+  onHeightChange(e){
+    this.setData({
+      'userInfo.height': e.detail.value
+    })
+  },
   onTargetWeightChange(e) {
     this.setData({
       'userInfo.targetWeight': e.detail.value

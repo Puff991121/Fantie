@@ -62,6 +62,17 @@
         bindinput="onEmailChange"
       />
     </view>
+
+    <view class="form-item">
+      <text class="label">身高</text>
+      <input 
+        class="input" 
+        type="number" 
+        placeholder="请输入你的身高（cm）" 
+        value="{{userInfo.height}}" 
+        bindinput="onHeightChange"
+      />
+    </view>
     <view class="form-item">
       <text class="label">目标体重</text>
       <input 

@@ -21,11 +21,13 @@ Page({
     userHeight: 175,
   },
 
-  onShow(){
-    console.log(utils.getTimePeriod(),'utils.getTimePeriod()');
+  onShow() {
+    const userInfo = wx.getStorageSync('userInfo');
+    console.log(userInfo, 'userInfo');
     this.setData({
-      currentDate:utils.formatDate(),
-      selectedTime:utils.getTimePeriod(),
+      currentDate: utils.formatDate(),
+      selectedTime: utils.getTimePeriod(),
+      userHeight: userInfo.height,
     })
   },
 
@@ -56,7 +58,7 @@ Page({
               difference: difference
             }
           })
-        }else{
+        } else {
           this.setData({
             todayData: {
               morning: 0,
@@ -74,7 +76,7 @@ Page({
     wx.cloud.callFunction({
       name: 'weight',
       data: {
-        type:'getWeightRecords',
+        type: 'getWeightRecords',
         limit: 7 // 获取最近7条记录
       },
       success: res => {
@@ -82,14 +84,14 @@ Page({
           const historyData = res.result.data.map(item => {
             const dateParts = item.date.split('-')
             const displayDate = `${dateParts[1]}-${dateParts[2]}`
-            
-            const difference = item.morning && item.evening ? 
+
+            const difference = item.morning && item.evening ?
               (item.evening - item.morning).toFixed(1) : null
-              
+
             // 计算BMI
-            const bmi = item.evening ? 
+            const bmi = item.evening ?
               (item.evening / Math.pow(this.data.userHeight / 100, 2)).toFixed(1) : null
-            
+
             return {
               date: displayDate,
               morning: item.morning,
@@ -98,8 +100,10 @@ Page({
               bmi: bmi
             }
           })
-          
-          this.setData({ historyData })
+
+          this.setData({
+            historyData
+          })
         }
       }
     })
@@ -110,7 +114,7 @@ Page({
     wx.cloud.callFunction({
       name: 'weight',
       data: {
-        type:'getMonthStats',
+        type: 'getMonthStats',
         date: this.data.currentDate
       },
       success: res => {
@@ -129,23 +133,23 @@ Page({
     wx.cloud.callFunction({
       name: 'userInfo',
       data: {
-        type:'updateUserInfo',
+        type: 'updateUserInfo',
         userInfo: {
           ...userInfo,
           weight,
         },
       },
-     
-    }).then(res =>{
-        if (res.result.code === 200) {
-          wx.setStorageSync('userInfo', res.result.data)
-        } else {
-          wx.showToast({
-            title: res.result.message || '保存失败',
-            icon: 'none'
-          })
-        }
-    }).catch(err =>{
+
+    }).then(res => {
+      if (res.result.code === 200) {
+        wx.setStorageSync('userInfo', res.result.data)
+      } else {
+        wx.showToast({
+          title: res.result.message || '保存失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
       wx.hideLoading()
       wx.showToast({
         title: '保存失败',
@@ -156,7 +160,11 @@ Page({
 
   // 添加/更新体重记录
   addWeightRecord() {
-    const { selectedTime, inputWeight, currentDate } = this.data
+    const {
+      selectedTime,
+      inputWeight,
+      currentDate
+    } = this.data
     if (!inputWeight) {
       wx.showToast({
         title: '请输入体重',
@@ -168,7 +176,7 @@ Page({
     wx.cloud.callFunction({
       name: 'weight',
       data: {
-        type:'addWeightRecord',
+        type: 'addWeightRecord',
         date: currentDate,
         time: selectedTime === '早上' ? 'morning' : 'evening',
         weight: parseFloat(inputWeight)
@@ -182,7 +190,7 @@ Page({
           //更新最新体重数据
           this.saveUserInfo(inputWeight);
           this.hideAddModal();
-          
+
           // 刷新数据
           this.getTodayData()
           this.getHistoryData()
@@ -288,7 +296,9 @@ Page({
   calculateBMI(weight, height) {
     // height应为用户设置的身高（米）
     // 这里只是一个示例，实际应用中需要获取用户身高
-    const userHeight = 1.75; // 假设用户身高1.75米
+    const {
+      userHeight
+    } = this.data; // 假设用户身高1.75米
     return (weight / (userHeight * userHeight)).toFixed(1);
   }
 });
