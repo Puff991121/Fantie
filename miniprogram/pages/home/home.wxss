@@ -1,1 +1,178 @@
-/* pages/home/home.wxss */
+/* pages/index/index.wxss */
+.home-container {
+  margin: 10rpx 30rpx;
+  padding: 20rpx;
+  background: linear-gradient(to bottom, #f5fff5, #ffffff);
+  min-height: 100vh;
+}
+
+/* 用户头部样式 */
+.user-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.user-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.record-days {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 10rpx;
+}
+
+/* 今日概览样式 */
+.today-overview {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.date {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.record-btn {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 24rpx;
+  padding: 0 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  border-radius: 25rpx;
+}
+
+.overview-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.overview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.item-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 功能模块样式 */
+.function-modules {
+  margin-bottom: 30rpx;
+}
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30rpx;
+}
+
+.module-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx 0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.module-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.module-name {
+  font-size: 24rpx;
+  color: #333;
+}
+
+/* 最近动态样式 */
+.recent-activities {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.activity-name {
+  font-size: 26rpx;
+  color: #333;
+  flex: 2;
+}
+
+.activity-value {
+  font-size: 26rpx;
+  color: #4CAF50;
+  flex: 1;
+  text-align: right;
+  margin-right: 20rpx;
+}
+
+.activity-time {
+  font-size: 22rpx;
+  color: #999;
+  flex: 1;
+  text-align: right;
+}
+.record {
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+.record image{
+  width: 30rpx;
+  height: 30rpx;
+}

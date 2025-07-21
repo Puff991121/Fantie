@@ -67,7 +67,7 @@ page{
 }
 
 .history-table {
-  box-shadow: 2px 2px 28px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+  box-shadow: 1px 1px 28px rgba(0, 0, 0, 0.1); /* 阴影效果 */
   border-radius: 10rpx;
   overflow: hidden;
   margin-bottom: 30rpx;

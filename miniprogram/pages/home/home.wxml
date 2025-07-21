@@ -1,4 +1,44 @@
-<!--pages/home/home.wxml-->
-<text>
-12223
-</text>
+<!--pages/index/index.wxml-->
+<view class="home-container">
+  <!-- 顶部用户信息 -->
+  <view class="user-header">
+    <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"></image>
+    <view class="user-info">
+      <text class="greeting">下午好，{{userInfo.nickName || '用户'}}</text>
+      <text class="record-days">今天是持续记录的第{{recordDays}}天</text>
+    </view>
+  </view>
+
+  <!-- 今日概览 -->
+  <view class="today-overview">
+    <view class="overview-header">
+      <text class="date">{{currentDate}}</text>
+      <view class="record" bindtap="navigateToRecord">
+        <image src="/images/h36.png" mode=""/>
+        记录
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能模块 -->
+  <view class="function-modules">
+    <view class="module-grid">
+      <view class="module-item" wx:for="{{modules}}" wx:key="id" bindtap="navigateToModule" data-module="{{item.id}}">
+        <image class="module-icon" src="{{item.icon}}"></image>
+        <text class="module-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 最近动态 -->
+  <view class="recent-activities">
+    <view class="section-title">最近动态</view>
+    <view class="activity-list">
+      <view class="activity-item" wx:for="{{recentActivities}}" wx:key="id">
+        <text class="activity-name">{{item.name}}</text>
+        <text class="activity-value">{{item.value}}</text>
+        <text class="activity-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+</view>
