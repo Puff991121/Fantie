@@ -22,11 +22,18 @@
     "miniprogram": {
       "list": [
         {
-          "name": "三围记录",
-          "pathName": "pages/measurements/index",
+          "name": "收支管理",
+          "pathName": "pages/accounting/index",
           "query": "",
           "scene": null,
           "launchMode": "default"
+        },
+        {
+          "name": "三围记录",
+          "pathName": "pages/measurements/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         },
         {
           "name": "pages/home/home",
