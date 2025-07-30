@@ -1,0 +1,73 @@
+<view class="weight-container">
+  <!-- 日期选择区域 -->
+  <view class="date-header">
+    <view class="arrow" bindtap="prevDay">
+      <image src="/images/left-arrow.png" mode="" />
+    </view>
+    <picker mode="date" value="{{currentDate}}" fields="day" bindchange="handleDateChange">
+      <view class="current-date">{{currentDate}}</view>
+    </picker>
+    <view class="arrow" bindtap="nextDay">
+      <image src="/images/right-arrow.png" mode="" />
+    </view>
+  </view>
+
+  <!-- 当日体重记录 -->
+  <view class="today-weight">
+    <view class="weight-row">
+      <text>胸围</text>
+      <text>腰围</text>
+      <text>臀围</text>
+    </view>
+    <view class="weight-row">
+      <text>{{todayData.bust || '--'}}cm</text>
+      <text>{{todayData.waist || '--'}}cm</text>
+      <text>{{todayData.hips || '--'}}cm</text>
+    </view>
+  </view>
+
+  <!-- 历史记录表格 -->
+  <view class="history-section">
+    <view class="section-title">最近14天三围记录</view>
+    <view class="history-table">
+      <view class="table-header">
+        <text>日期</text>
+        <text>胸围</text>
+        <text>腰围</text>
+        <text>臀围</text>
+      </view>
+      <block wx:for="{{historyData}}" wx:key="date">
+        <view class="table-row">
+          <text>{{item.date}}</text>
+          <text>{{item.bust || 0}}cm</text>
+          <text>{{item.waist || 0}}cm</text>
+          <text>{{item.hips || 0}}cm</text>
+          
+        </view>
+      </block>
+    </view>
+  </view>
+
+
+
+  <!-- 添加记录按钮 -->
+  <button class="add-button" bindtap="showAddModal">+添加今日三围</button>
+
+  <!-- 添加记录模态框 -->
+  <modal title="添加三围记录" wx:if="{{showModal}}" bindcancel="hideAddModal" bindconfirm="addMeasurementsRecord">
+    <view class="modal-content">
+      <view class="form-item">
+        <text class="label">胸围：</text>
+        <input type="number" placeholder="请输入胸围(cm)"  bindinput="handleBustInput" />
+      </view>
+      <view class="form-item">
+        <text class="label">腰围：</text>
+        <input type="number" placeholder="请输入腰围(cm)"  bindinput="handleWaistInput" />
+      </view>
+      <view class="form-item">
+        <text class="label">臀围：</text>
+        <input type="number" placeholder="请输入臀围(cm)"  bindinput="handleHipsInput" />
+      </view>
+    </view>
+  </modal>
+</view>

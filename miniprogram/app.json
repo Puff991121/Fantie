@@ -6,7 +6,8 @@
     "pages/discover/discover",
     "pages/data/data",
     "pages/profileDetail/profileDetail",
-    "pages/weightDetail/weightDetail"
+    "pages/weightDetail/weightDetail",
+    "pages/measurements/index"
   ],
   "tabBar": {
     "color": "#666666",

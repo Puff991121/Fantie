@@ -1,8 +1,9 @@
 // pages/profile/profile.js
+const utils = require('../../utils/dateFormat');
 Page({
   data: {
     userInfo: {},
-    joinDays: 146,
+    joinDays: 0,
     stats: {
       exerciseCount: 36,
       currentWeight: 62.5,
@@ -14,10 +15,16 @@ Page({
   onShow() {
     // 获取用户信息
     const userInfo = wx.getStorageSync('userInfo');
+    console.log(userInfo,'userInfo');
     if (userInfo) {
       this.setData({
-        userInfo
+        userInfo,
       });
+      if(userInfo.createdAt){
+        this.setData({
+          joinDays:utils.calculateDateInterval(userInfo.createdAt)
+        })
+      }
     }
   },
 
@@ -46,6 +53,7 @@ Page({
     wx.showLoading({
       title: '加载中...'
     });
+
     setTimeout(() => {
       this.setData({
         stats: {

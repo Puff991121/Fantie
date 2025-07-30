@@ -1,5 +1,6 @@
 // pages/index/index.js
-const app = getApp()
+const utils = require('../../utils/dateFormat');
+const app = getApp();
 
 Page({
   data: {
@@ -14,7 +15,7 @@ Page({
     modules: [
       { id: 'weight', name: '体重管理', icon: '/images/weight.png' },
       { id: 'finance', name: '收支管理', icon: '/images/finance.png' },
-      { id: 'sport', name: '运动记录', icon: '/images/sport.png' },
+      { id: 'measurements', name: '三围记录', icon: '/images/sport.png' },
       { id: 'schedule', name: '日程记录', icon: '/images/schedule.png' },
       { id: 'payment', name: '生活缴费', icon: '/images/payment.png' },
       { id: 'clockin', name: '运动打卡', icon: '/images/clockin.png' }
@@ -36,9 +37,12 @@ Page({
       this.setData({
         userInfo,
       })
-    } else {
-      
-    }
+      if(userInfo.createdAt){
+        this.setData({
+          recordDays:utils.calculateDateInterval(userInfo.createdAt)
+        })
+      }
+    } 
   },
 
   setCurrentDate: function() {
@@ -53,15 +57,7 @@ Page({
   fetchDataFromCloud: function() {
     const db = wx.cloud.database()
     const _ = db.command
-    
-    // 获取用户记录天数
-    db.collection('user_records').where({
-      _openid: _.exists(true)
-    }).count().then(res => {
-      this.setData({
-        recordDays: res.total
-      })
-    }).catch(console.error)
+
     
     // 获取今日数据
     const today = new Date()
@@ -131,8 +127,8 @@ Page({
       case 'finance':
         url = '/pages/finance/finance'
         break
-      case 'sport':
-        url = '/pages/sport/sport'
+      case 'measurements':
+        url = '/pages/measurements/index'
         break
       case 'schedule':
         url = '/pages/schedule/schedule'

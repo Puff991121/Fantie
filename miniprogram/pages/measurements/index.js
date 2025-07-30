@@ -7,9 +7,9 @@ Page({
     inputWeight: '',
     showModal: false,
     todayData: {
-      morning: null,
-      evening: null,
-      difference: null
+      bust: null,
+      waist: null,
+      hips: null
     },
     historyData: [],
     monthStats: {
@@ -19,6 +19,9 @@ Page({
       min: null
     },
     userHeight: 175,
+    bust: null,
+    waist: null,
+    hips: null,
   },
 
   onShow() {
@@ -40,21 +43,26 @@ Page({
   // 获取今日数据
   getTodayData() {
     wx.cloud.callFunction({
-      name: 'weight',
+      name: 'measurements',
       data: {
-        type: 'getWeightRecords',
+        type: 'getMeasurementsRecords',
         date: this.data.currentDate
       },
       success: res => {
+        console.log(res, 'res');
         if (res.result.code === 200 && res.result.data.length > 0) {
           const record = res.result.data[0]
-          const difference = record.morning && record.evening ?
-            (record.evening - record.morning).toFixed(1) : null
+          console.log(record, 'record');
+          const {
+            bust,
+            waist,
+            hips
+          } = record;
           this.setData({
             todayData: {
-              morning: record.morning,
-              evening: record.evening,
-              difference: difference
+              bust,
+              waist,
+              hips
             }
           })
         } else {
@@ -70,33 +78,32 @@ Page({
     })
   },
 
-  // 获取最近7天体重数据
+  // 获取最近14天体重数据
   getHistoryData() {
     wx.cloud.callFunction({
-      name: 'weight',
+      name: 'measurements',
       data: {
-        type: 'getWeightRecords',
-        limit: 7 // 获取最近7条记录
+        type: 'getMeasurementsRecords',
+        limit: 14 // 获取最近7条记录
       },
       success: res => {
         if (res.result.code === 200) {
           const historyData = res.result.data.map(item => {
             const dateParts = item.date.split('-')
             const displayDate = `${dateParts[1]}-${dateParts[2]}`
+            const {
+              bust,
+              waist,
+              hips
+            } = item;
 
-            const difference = item.morning && item.evening ?
-              (item.evening - item.morning).toFixed(1) : null
 
-            // 计算BMI
-            const bmi = item.evening ?
-              (item.evening / Math.pow(this.data.userHeight / 100, 2)).toFixed(1) : null
 
             return {
               date: displayDate,
-              morning: item.morning,
-              evening: item.evening,
-              difference: difference,
-              bmi: bmi
+              bust,
+              waist,
+              hips
             }
           })
 
@@ -126,59 +133,46 @@ Page({
     })
   },
 
-  //保存用户当前体重
-  saveUserInfo(weight) {
-    const userInfo = wx.getStorageSync('userInfo');
-    wx.cloud.callFunction({
-      name: 'userInfo',
-      data: {
-        type: 'updateUserInfo',
-        userInfo: {
-          ...userInfo,
-          weight,
-        },
-      },
 
-    }).then(res => {
-      if (res.result.code === 200) {
-        wx.setStorageSync('userInfo', res.result.data)
-      } else {
-        wx.showToast({
-          title: res.result.message || '保存失败',
-          icon: 'none'
-        })
-      }
-    }).catch(err => {
-      wx.hideLoading()
-      wx.showToast({
-        title: '保存失败',
-        icon: 'none'
-      })
-    })
-  },
 
-  // 添加/更新体重记录
-  addWeightRecord() {
+  // 添加/更新三围记录
+  addMeasurementsRecord() {
     const {
-      selectedTime,
-      inputWeight,
+      bust,
+      waist,
+      hips,
       currentDate
     } = this.data
-    if (!inputWeight) {
+    if (!bust) {
       wx.showToast({
-        title: '请输入体重',
+        title: '请输入胸围',
+        icon: 'none'
+      })
+      return
+    }
+    if (!waist) {
+      wx.showToast({
+        title: '请输入腰围',
+        icon: 'none'
+      })
+      return
+    }
+    if (!hips) {
+      wx.showToast({
+        title: '请输入臀围',
         icon: 'none'
       })
       return
     }
 
     wx.cloud.callFunction({
-      name: 'weight',
+      name: 'measurements',
       data: {
-        type: 'addWeightRecord',
+        type: 'addMeasurementsRecords',
         date: currentDate,
-        time: selectedTime === '早上' ? 'morning' : 'evening',
-        weight: parseFloat(inputWeight)
+        bust,
+        waist,
+        hips,
       },
       success: res => {
         if (res.result.code === 200) {
@@ -187,13 +181,12 @@ Page({
             icon: 'success'
           });
           //更新最新体重数据
-          this.saveUserInfo(inputWeight);
+          // this.saveUserInfo(inputWeight);
           this.hideAddModal();
 
           // 刷新数据
           this.getTodayData()
           this.getHistoryData()
-          this.getMonthStats()
         } else {
           wx.showToast({
             title: '记录失败',
@@ -283,9 +276,19 @@ Page({
     });
   },
 
-  handleWeightInput(e) {
+  handleBustInput(e) {
     this.setData({
-      inputWeight: e.detail.value
+      bust: e.detail.value
+    });
+  },
+  handleWaistInput(e) {
+    this.setData({
+      waist: e.detail.value
+    });
+  },
+  handleHipsInput(e) {
+    this.setData({
+      hips: e.detail.value
     });
   },
 
