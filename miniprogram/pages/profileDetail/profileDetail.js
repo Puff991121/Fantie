@@ -4,9 +4,14 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
-    genderOptions: [
-      { value: '男', text: '男' },
-      { value: '女', text: '女' }
+    genderOptions: [{
+        value: '男',
+        text: '男'
+      },
+      {
+        value: '女',
+        text: '女'
+      }
     ],
     genderIndex: 0
   },
@@ -17,7 +22,9 @@ Page({
 
   // 获取用户信息
   fetchUserInfo() {
-    wx.showLoading({ title: '加载中...' })
+    wx.showLoading({
+      title: '加载中...'
+    })
     // 从本地缓存获取
     const localUserInfo = wx.getStorageSync('userInfo')
     if (localUserInfo) {
@@ -32,18 +39,18 @@ Page({
       data: {
         type: "getUserInfo",
       },
-      
-    }).then(res =>{
+
+    }).then(res => {
       wx.hideLoading()
-        if (res.result.code === 200) {
-          const userInfo = res.result.data
-          this.setData({
-            userInfo: userInfo,
-            genderIndex: this.getGenderIndex(userInfo.gender)
-          })
-          wx.setStorageSync('userInfo', userInfo)
-        }
-    }).catch(err =>{
+      if (res.result.code === 200) {
+        const userInfo = res.result.data
+        this.setData({
+          userInfo: userInfo,
+          genderIndex: this.getGenderIndex(userInfo.gender)
+        })
+        wx.setStorageSync('userInfo', userInfo)
+      }
+    }).catch(err => {
       wx.hideLoading()
       console.error('获取用户信息失败', err)
     })
@@ -69,10 +76,12 @@ Page({
 
   // 上传头像到云存储
   uploadAvatar(tempFilePath) {
-    wx.showLoading({ title: '上传中...' })
-    
+    wx.showLoading({
+      title: '上传中...'
+    })
+
     const cloudPath = `avatars/${Date.now()}-${Math.floor(Math.random() * 1000)}.jpg`
-    
+
     wx.cloud.uploadFile({
       cloudPath,
       filePath: tempFilePath,
@@ -101,7 +110,7 @@ Page({
 
   onGenderChange(e) {
     const index = e.detail.value;
-    console.log(e,'eeee');
+    console.log(e, 'eeee');
     this.setData({
       genderIndex: index,
       'userInfo.gender': this.data.genderOptions[index].value
@@ -119,7 +128,7 @@ Page({
       'userInfo.email': e.detail.value
     })
   },
-  onHeightChange(e){
+  onHeightChange(e) {
     this.setData({
       'userInfo.height': e.detail.value
     })
@@ -131,34 +140,36 @@ Page({
   },
   // 保存用户信息
   saveUserInfo() {
-    wx.showLoading({ title: '保存中...' });
+    console.log(this.data.userInfo,'this.data.userInfo');
+    wx.showLoading({
+      title: '保存中...'
+    });
     wx.cloud.callFunction({
       name: 'userInfo',
       data: {
-        type:'updateUserInfo',
+        type: 'updateUserInfo',
         userInfo: this.data.userInfo,
       },
-     
-    }).then(res =>{
-      wx.hideLoading()
-        if (res.result.code === 200) {
-          wx.showToast({
-            title: '保存成功',
-            icon: 'success'
+
+    }).then(res => {
+      if (res.result.code === 200) {
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success'
+        });
+        wx.setStorageSync('userInfo', this.data.userInfo)
+        setTimeout(() => {
+          wx.switchTab({
+            url: '/pages/profile/profile',
           });
-          wx.setStorageSync('userInfo', this.data.userInfo)
-          setTimeout(() => {
-            wx.switchTab({
-              url: '/pages/profile/profile',
-            });
-          }, 1500)
-        } else {
-          wx.showToast({
-            title: res.result.message || '保存失败',
-            icon: 'none'
-          })
-        }
-    }).catch(err =>{
+        }, 1500)
+      } else {
+        wx.showToast({
+          title: res.result.message || '保存失败',
+          icon: 'none'
+        })
+      }
+    }).catch(err => {
       wx.hideLoading()
       wx.showToast({
         title: '保存失败',

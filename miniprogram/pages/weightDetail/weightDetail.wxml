@@ -82,7 +82,7 @@
       <picker mode="selector" range="{{['早上', '晚上']}}" bindchange="handleTimeChange">
         <view class="picker">选择时间: {{selectedTime}}</view>
       </picker>
-      <input type="number" placeholder="请输入体重(kg)" bindinput="handleWeightInput" />
+      <input type="digit" placeholder="请输入体重(kg)" bindinput="handleWeightInput" />
     </view>
   </modal>
 

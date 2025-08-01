@@ -22,7 +22,7 @@ const updateUserInfo = async (event) => {
       targetWeight:event.userInfo.targetWeight || '',
       updatedAt: db.serverDate()
     }
-
+    console.log(updateData,'updateData');
     // 如果有上传的头像，则更新
     if (event.userInfo.avatarUrl && event.userInfo.avatarUrl.startsWith('cloud://')) {
       updateData.avatarUrl = event.userInfo.avatarUrl
@@ -90,6 +90,8 @@ const getUserInfo = async () => {
         gender: '',
         phone: '',
         email: '',
+        height:'',
+        targetWeight:'',
         createdAt: db.serverDate(),
         updatedAt: db.serverDate()
       }
